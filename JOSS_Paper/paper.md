@@ -40,4 +40,4 @@ bibliography: paper.bib
 
 # Polysomnographic Sleep State Scoring -- Summary
 
-This is a test reference [Harvey2013].
+This is a test reference [@Harvey2013].
