@@ -1,4 +1,8 @@
 %% Description
+%
+% Before running this script, please execute setup.m first to set up path
+% and folder parameters. 
+%
 % This script is the first step to take for automated sleep scoring with
 % kNNSS. It will first set the path to include functions called during the 
 % process then it calculates and saves the feature table for a set of data
@@ -18,13 +22,8 @@
 % Author: Tamas Kiss <kiss.t@wigner.hu>
 
 %% Parameters                                                              \par\
-clear par
 
 %IO
-par.FunctionDir = '/home/umat/bognor/kNNSS/Function_Library/'; %Our functions live in this directory.
-par.TopDir = '/home/umat/bognor/kNNSS/Example_Data/RawData'; %This is the top folder for raw data.
-par.DataDir = '/home/umat/bognor/kNNSS/Example_Data/RawData/EDF'; %This is the folder in which your EDF files live. All of them will be processed.
-par.IntDir = '/home/umat/bognor/kNNSS/Example_Data/IntermRes'; %Training sets (feature tables in .mat files) will be saved in this folder.
 par.PostFn = '_trset.mat'; %This part will be appended to the name of the EDF file and features will be saved in this file for each experiment.
 par.DataExt = '.edf'; %File name extension for raw data
 par.TestPF = '_test.mat'; % This will be appended to the partition put aside for testing
@@ -38,13 +37,6 @@ par.CombineStates = {...
     'A'  'D';...
     'A'  '-'};
 par.TrainLabels = {'W', 'NR', 'R'}; %Manual labels to train
-
-%% Set the path
-restoredefaultpath;
-rmpath('/home/umat/Documents/MATLAB')
-clear RESTOREDEFAULTPATH_EXECUTED
-addpath(par.FunctionDir)
-rehash
 
 %% Calculate features
 files = dir([par.DataDir filesep '*' par.DataExt]);

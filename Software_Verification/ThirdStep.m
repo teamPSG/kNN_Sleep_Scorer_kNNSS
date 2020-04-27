@@ -1,4 +1,8 @@
 %% Description
+%
+% Before running this script, please execute setup.m first to set up path
+% and folder parameters. 
+%
 % Using the kNN Classifier trained in Step 2, Step 3 is the prediction of
 % labels for the unseen, testing part of the data.
 %
@@ -8,12 +12,10 @@
 % Author: Tamas Kiss <kiss.t@wigner.hu>
 
 %% Parameters
-clear par
+
 %IO
-par.FunctionDir = '/home/umat/bognor/kNNSS/Function_Library/'; %Our functions live in this directory.
-par.IntDir = '/home/umat/bognor/kNNSS/Example_Data/IntermRes'; %Training sets (feature tables in .mat files) will be saved in this folder.
-par.OneModelFile = '/home/umat/bognor/kNNSS/Example_Data/IntermRes/ExampleSingleModel.mat'; %Matlab file to store kNN classifier
-par.MultipleModelFile = '/home/umat/bognor/kNNSS/Example_Data/IntermRes/ExampleMultipleModels.mat'; %Matlab file to store kNN classifier
+par.OneModelFile = fullfile(par.IntDir, 'ExampleSingleModel.mat'); %Matlab file to store kNN classifier
+par.MultipleModelFile = fullfile(par.IntDir, 'ExampleMultipleModels.mat'); %Matlab file to store kNN classifier
 par.TestPF = '_test.mat'; % This will be appended to the partition put aside for testing
 
 %Testing
@@ -71,7 +73,8 @@ clear expidx
 
 %% Plot a quick evaluation of estimation goodness with single model
 evaluate_model_goodness(SingleLabels, OriginalLabels, ...
-    'PlotROC', par.TrainLabels, 'ROCNameMap', par.ROCNameMap);
+    'PlotROC', par.TrainLabels, 'ROCNameMap', par.ROCNameMap, ...
+    'ROCLayout', [1,3]);
 set(gcf, 'Name', 'Prediction using single model')
 
 %% Load pre-trained multiple models
@@ -90,7 +93,8 @@ clear expidx
 
 %% Plot a quick evaluation of estimation goodness with single model
 evaluate_model_goodness(MultipleLabels, OriginalLabels, ...
-    'PlotROC', par.TrainLabels, 'ROCNameMap', par.ROCNameMap);
+    'PlotROC', par.TrainLabels, 'ROCNameMap', par.ROCNameMap, ...
+    'ROCLayout', [1,3]);
 set(gcf, 'Name', 'Prediction using multiple models')
 
 %% Extra step: Deflate single model
@@ -126,6 +130,7 @@ fprintf(' done.\n\n')
 
 % Plot what happened to prediction goodness
 evaluate_model_goodness(DeflatedLabels, OriginalLabels, ...
-    'PlotROC', par.TrainLabels, 'ROCNameMap', par.ROCNameMap);
+    'PlotROC', par.TrainLabels, 'ROCNameMap', par.ROCNameMap, ...
+    'ROCLayout', [1,3]);
 set(gcf, 'Name', 'Prediction using deflated single model')
 clear Wloc NRloc DelW DelNR DelWIdx DelNRIdx expidx
