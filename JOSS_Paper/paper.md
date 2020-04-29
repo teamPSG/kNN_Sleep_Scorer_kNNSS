@@ -16,17 +16,21 @@ authors:
     orcid: 0000-0000-0000-0000
     affiliation: 3
 
-  - name: Dmitri Volfson
-    orcid: 0000-0002-5167-7834
-    affiliation: 1,4
+  - name: Michael Schwartz
+    orcid: 0000-0002-5464-638X
+    affiliation: 3
+
+  - name: Thomas Kilduff
+    orcid: 0000-0002-6823-0094
+    affiliation: 3
 
   - name: Derek Buhl
     orcid: 0000-0003-4433-7150
     affiliation: 1,4
 
-  - name: Thomas Kilduff
-    orcid: 0000-0002-6823-0094
-    affiliation: 3
+  - name: Dmitri Volfson
+    orcid: 0000-0002-5167-7834
+    affiliation: 1,4
 
 affiliations:
  - name: Global Research and Development, Pfizer Inc, Groton, CT, USA
