@@ -41,4 +41,4 @@ clear files
 files = dir([par.IntDir filesep '*' par.TrainPF]);
 train_many_models(par.IntDir, {files.name}, par.MultipleModelFile, ...
     'ValMeth', par.ValMeth, 'postfn', '', 'RemFromFn', par.TrainPF);
-clear files
+clear files ans

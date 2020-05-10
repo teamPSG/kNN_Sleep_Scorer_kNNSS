@@ -16,6 +16,7 @@
 %IO
 par.OneModelFile = fullfile(par.IntDir, 'ExampleSingleModel.mat'); %Matlab file to store kNN classifier
 par.MultipleModelFile = fullfile(par.IntDir, 'ExampleMultipleModels.mat'); %Matlab file to store kNN classifier
+par.PerfLogFile = fullfile(par.IntDir, 'PerformanceLogs.txt');
 par.TestPF = '_test.mat'; % This will be appended to the partition put aside for testing
 
 %Testing
@@ -29,12 +30,8 @@ par.ROCNameMap = {... %Used to plot short labels on plot presenting model acurac
     'tko128_01182016' '128'};
 par.DeflateVal = 0.9; %90% of W and NR epochs are removed to compensate for too few REM epochs
 
-%% Set the path
-restoredefaultpath;
-rmpath('/home/umat/Documents/MATLAB')
-clear RESTOREDEFAULTPATH_EXECUTED
-addpath(par.FunctionDir)
-rehash
+%% Open log file
+diary(par.PerfLogFile)
 
 %% Load pre-calculated feature data
 clear T
@@ -63,6 +60,9 @@ Single = load(par.OneModelFile);
 fprintf(' done.\n\n')
 
 %% Predict labels using single model
+%Structure SingleLabels will store predicted labels when single model is
+%used. Each animal is described by a field in this struch with a cell of
+%strings array, same length as OriginalLabels.
 fprintf('Predicting labels...')
 clear labels
 for expidx = 1:length(exps)
@@ -71,11 +71,32 @@ end
 fprintf(' done.\n\n')
 clear expidx
 
-%% Plot a quick evaluation of estimation goodness with single model
-evaluate_model_goodness(SingleLabels, OriginalLabels, ...
+%% Plot and print a quick evaluation of estimation goodness with single model
+mg = evaluate_model_goodness(SingleLabels, OriginalLabels, ...
     'PlotROC', par.TrainLabels, 'ROCNameMap', par.ROCNameMap, ...
     'ROCLayout', [1,3]);
 set(gcf, 'Name', 'Prediction using single model')
+
+%Print performance metrics
+fprintf('True positive rates and false positive rates achieved using a single model for all animals:\n')
+PM = NaN(length(exps), 2, length(par.TrainLabels));
+for expidx = 1:length(exps)
+    fprintf('%s:\n', exps{expidx})
+    for lidx = 1:length(par.TrainLabels)
+        tmpSEN = mg.(exps{expidx}).PerfMetr{par.TrainLabels{lidx}, 'SEN'};
+        tmpFPR = mg.(exps{expidx}).PerfMetr{par.TrainLabels{lidx}, 'FPR'};
+        PM(expidx, :, lidx) = [tmpSEN tmpFPR];
+        fprintf('\t%s -- TPR: %0.2f; FPR: %0.2f\n', ...
+            par.TrainLabels{lidx}, tmpSEN, tmpFPR);
+    end
+    fprintf('\n')
+end
+for lidx = 1:length(par.TrainLabels)
+    fprintf('Average +- std of %s [SEN, FPR] = [%0.2f, %0.2f] +- [%0.2f, %0.2f].\n',...
+        par.TrainLabels{lidx}, mean(PM(:, :, lidx)), std(PM(:,:, lidx)));
+end
+fprintf('\n\n')
+clear mg expidx lidx tmp* PM
 
 %% Load pre-trained multiple models
 fprintf('Loading model from %s...', par.OneModelFile)
@@ -91,11 +112,32 @@ end
 fprintf(' done.\n\n')
 clear expidx
 
-%% Plot a quick evaluation of estimation goodness with single model
-evaluate_model_goodness(MultipleLabels, OriginalLabels, ...
+%% Plot and print a quick evaluation of estimation goodness with multiple model
+mg = evaluate_model_goodness(MultipleLabels, OriginalLabels, ...
     'PlotROC', par.TrainLabels, 'ROCNameMap', par.ROCNameMap, ...
     'ROCLayout', [1,3]);
 set(gcf, 'Name', 'Prediction using multiple models')
+
+%Print performance metrics
+fprintf('True positive rates and false positive rates achieved using one model for each animal:\n')
+PM = NaN(length(exps), 2, length(par.TrainLabels));
+for expidx = 1:length(exps)
+    fprintf('%s:\n', exps{expidx})
+    for lidx = 1:length(par.TrainLabels)
+        tmpSEN = mg.(exps{expidx}).PerfMetr{par.TrainLabels{lidx}, 'SEN'};
+        tmpFPR = mg.(exps{expidx}).PerfMetr{par.TrainLabels{lidx}, 'FPR'};
+        PM(expidx, :, lidx) = [tmpSEN tmpFPR];
+        fprintf('\t%s -- TPR: %0.2f; FPR: %0.2f\n', ...
+            par.TrainLabels{lidx}, tmpSEN, tmpFPR);
+    end
+    fprintf('\n')
+end
+for lidx = 1:length(par.TrainLabels)
+    fprintf('Average +- std of %s [SEN, FPR] = [%0.2f, %0.2f] +- [%0.2f, %0.2f].\n',...
+        par.TrainLabels{lidx}, mean(PM(:, :, lidx)), std(PM(:,:, lidx)));
+end
+fprintf('\n\n')
+clear mg expidx lidx tmp* PM
 
 %% Extra step: Deflate single model
 %Identify NR and W epochs in model and remove DeflateVal fraction of them
@@ -127,10 +169,33 @@ for expidx = 1:length(exps)
     DeflatedLabels.(exps{expidx}) = NewMod.predict(TNormd.(exps{expidx}){:, [false Single.seld_features]});
 end
 fprintf(' done.\n\n')
+clear Wloc NRloc DelW DelNR DelWIdx DelNRIdx expidx
 
-% Plot what happened to prediction goodness
-evaluate_model_goodness(DeflatedLabels, OriginalLabels, ...
+%% Plot and print what happened to prediction goodness
+mg = evaluate_model_goodness(DeflatedLabels, OriginalLabels, ...
     'PlotROC', par.TrainLabels, 'ROCNameMap', par.ROCNameMap, ...
     'ROCLayout', [1,3]);
 set(gcf, 'Name', 'Prediction using deflated single model')
-clear Wloc NRloc DelW DelNR DelWIdx DelNRIdx expidx
+
+%Print performance metrics
+fprintf('True positive rates and false positive rates achieved using deflated single model:\n')
+PM = NaN(length(exps), 2, length(par.TrainLabels));
+for expidx = 1:length(exps)
+    fprintf('%s:\n', exps{expidx})
+    for lidx = 1:length(par.TrainLabels)
+        tmpSEN = mg.(exps{expidx}).PerfMetr{par.TrainLabels{lidx}, 'SEN'};
+        tmpFPR = mg.(exps{expidx}).PerfMetr{par.TrainLabels{lidx}, 'FPR'};
+        PM(expidx, :, lidx) = [tmpSEN tmpFPR];
+        fprintf('\t%s -- TPR: %0.2f; FPR: %0.2f\n', ...
+            par.TrainLabels{lidx}, tmpSEN, tmpFPR);
+    end
+    fprintf('\n')
+end
+for lidx = 1:length(par.TrainLabels)
+    fprintf('Average +- std of %s [SEN, FPR] = [%0.2f, %0.2f] +- [%0.2f, %0.2f].\n',...
+        par.TrainLabels{lidx}, mean(PM(:, :, lidx)), std(PM(:,:, lidx)));
+end
+clear mg expidx lidx tmp* PM
+
+%% Close log file
+diary off

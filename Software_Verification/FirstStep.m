@@ -111,4 +111,4 @@ for expidx = 1:length(exps)
     save(ofn, 'T', 'epdur')
 end
 fprintf('\n')
-clear expidx ofn T epdur T_test T_train ED
+clear expidx ofn T epdur T_test T_train ED fns exps

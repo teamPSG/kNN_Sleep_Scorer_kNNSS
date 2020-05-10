@@ -30,6 +30,11 @@ change_row_to_column.m, dpsschk.m, getfgrid.m, getparams.m, mtfftc.m, mtspecgram
 ### Installation
 All functions are stored in the Function_Library folder. Simply adding this folder to Matlab's function path will take care of installation. Alternatively, check out contents of the Software_Verification folder.
 
+## Top-level inputs and outputs
+*k*NNSS reads raw electrophysiological data from file. Currently the European Data Format and Matlab files are supported but see generate_statespace.m in Function_Library to see how additional formats can be added. Manual scores are read together with the data. These are typically text files that come in many format.
+
+Once the algorithm finishes predicting labels the output is a Matlab structure type variable, containing a cell array of strings in its fields. Strings correspond to predicted labels.
+
 ## Getting help
 For more information please do not hesitate to contact Tamás Kiss (kiss.t@wigner.hu).
 
