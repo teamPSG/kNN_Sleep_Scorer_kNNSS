@@ -13,7 +13,7 @@ authors:
     affiliation: 1,2
 
   - name: Stephen Morairty
-    orcid: 0000-0000-0000-0000
+    orcid: 0000-0002-0781-1645
     affiliation: 3
 
   - name: Michael Schwartz
@@ -53,7 +53,7 @@ bibliography: paper.bib
 
 Many features of sleep, such as the existence of rapid eye movement
 (REM) sleep or non-REM sleep stages, as well as some of the underlying
-physiological mechanisms controlling sleep are conserved across
+physiological mechanisms controlling sleep, are conserved across
 different mammalian species. Sleep research is important to
 understanding the impact of disease on circadian biology and optimal
 waking performance, and to advance treatments for sleep disorders,
@@ -110,14 +110,14 @@ these potential issues. Building on features classically extracted
 from EEG and EMG data and machine learning-based classification of
 PSG, this approach is capable of staging sleep in multiple species
 under control and drug-treated conditions, facilitating the detection
-of treatment-induced changes or manipulations (e.g., genetic). Using
-human interpretable features calculated from EEG and EMG will be
-important to understand drug mechanisms, for prediction of treatment
-outcomes, and as biomarkers or even translational biomarkers. However,
-the initial application of our approach is for basic and discovery
-research in which experiments are conducted in large cohorts of
-rodents with the expectation that results can be translated to
-higher-order mammals or humans.
+of treatment-induced changes or other manipulations (e.g.,
+genetic). Using human interpretable features calculated from EEG and
+EMG will be important to understand drug mechanisms, for prediction of
+treatment outcomes, and as biomarkers or even translational
+biomarkers. However, the initial application of our approach is for
+basic and discovery research in which experiments are conducted in
+large cohorts of rodents, with the expectation that results can be
+translated to higher-order mammals or humans.
 
 Multiple software applications have been developed to address the
 problem of automated sleep stage scoring. In their comparative review,
@@ -170,11 +170,36 @@ wakefulness.  Following feature extraction, a combined filter and
 wrapper method-based feature selection step is applied.  This step
 ensures that features with the most predictive value are chosen and
 also helps to prevent over-fitting. For classification, the
-*k*-nearest neighbors classifier is used on data pre-processed the way
-described above.
+*k*-nearest neighbors classifier is used on data pre-processed
+following the procedure described above.
 
 ![Summary of training and using the *k*-nearest neighbors algorithm
  for predicting sleep stage labels.\label{fig:method}](fig1.png)
+
+The algorithm was used to predict sleep stages in mice, rats and
+non-human primates. Prediction accuracy was found to depend on a
+number of parameters of the input data, including consistency of
+manual scores and physiological signals, as well as the amount of
+artifacts. Furthermore, relative frequency of predicted labels can
+influence efficacy, with rare labels being harder to predict. The code
+on GitHub [@kNNSS] accompanying this paper contains the abridged
+version of a dataset described in detail in @schwartz2018. Three
+labels were predicted: wake (W), non-REM sleep (NR), and REM sleep
+(R), and prediction efficacy was calculated (\autoref{fig:effic}). The
+model was first used to train a single classifier merging training
+data from all animals (\autoref{fig:effic}, A), then individual models
+were trained, one for each animal (\autoref{fig:effic}, B). The GitHub
+repository includes additional information on prediction accuracy,
+including detailed values of true and false positive rates, as well as
+a method to deal with imbalanced data.
+
+![Estimation of prediction accuracy. For each state (wake -- W,
+ non-REM -- NR, REM -- R) and animal (labeled asterisks) true and
+ false positive rates are calculated. Red crosses denote mean and SEM.
+ In A, training data was merged and one single classifier was trained
+ to predict sleep stages of all animals. In B, an individual
+ classifier was trained for each animal
+ separately.\label{fig:effic}](fig2.png)
 
 # Acknowledgments
 
