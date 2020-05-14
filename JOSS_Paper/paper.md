@@ -10,7 +10,7 @@ tags:
 authors:
   - name: Tamás Kiss
     orcid: 0000-0001-6360-0714
-    affiliation: 1,2
+    affiliation: "1, 2"
 
   - name: Stephen Morairty
     orcid: 0000-0002-0781-1645
@@ -26,11 +26,11 @@ authors:
 
   - name: Derek L.\ Buhl
     orcid: 0000-0003-4433-7150
-    affiliation: 1,4
+    affiliation: "1, 4"
 
   - name: Dmitri Volfson
     orcid: 0000-0002-5167-7834
-    affiliation: 1,4
+    affiliation: "1, 4"
 
 affiliations:
  - name: Global Research and Development, Pfizer Inc, Groton, CT, USA
