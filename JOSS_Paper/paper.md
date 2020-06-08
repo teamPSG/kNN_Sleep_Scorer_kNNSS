@@ -94,7 +94,7 @@ implement large clinical trials.
 To expedite the tedious process of visually analyzing PSG signals and
 to further objectivity in the scoring procedure, a number of sleep
 staging algorithms have been developed both for animals
-[@STEPHENSON2009263, @BASTIANINI2014277,@vladimir2020] and human
+[@STEPHENSON2009263,@BASTIANINI2014277,@barger2019,@vladimir2020] and human
 subjects [@PENZEL2000131,@gunn2020,@zhang2020] as reviewed most
 recently by @fiorillo2019 and @faust2019. However, computer-based
 methods are typically tested on data obtained from healthy subjects or
