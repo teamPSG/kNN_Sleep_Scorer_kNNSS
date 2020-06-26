@@ -19,7 +19,7 @@ change_row_to_column.m, dpsschk.m, getfgrid.m, getparams.m, mtfftc.m, mtspecgram
 
 ### Folder content
 
-- Example_Data: this directory contains three subdirectories. IntermRes is initially empty, intermediat files generated during the execution of the test scripts will be stored here. RawData contains epolysomnographycal recordings from Thomas Kilduff's laboratory at SRI International in EDF format. Subfolder EDF contain raw recordings, subfolder FFT stores associated manual sleep scores used to train classifiers and test prediction efficacy.
+- Example_Data: this directory contains three sub-directories. IntermRes is initially empty, intermediate files generated during the execution of the test scripts will be stored here. RawData contains polysomnographycal recordings from Thomas Kilduff's laboratory at SRI International in EDF format. Sub-folder EDF contain raw recordings, sub-folder FFT stores associated manual sleep scores used to train classifiers and test prediction efficacy.
 
 - Function_Library: this directory stores all the necessary Matlab functions required by *k*NNSS. Functions inputs and outputs are described in detail in the function header. Use Matlab's help to read about details of each function. A list of high-level purpose of functions is found in the Readme in this folder.
 
@@ -36,6 +36,6 @@ All functions are stored in the Function_Library folder. Simply adding this fold
 Once the algorithm finishes predicting labels the output is a Matlab structure type variable, containing a cell array of strings in its fields. Strings correspond to predicted labels.
 
 ## Getting help
-For more information please do not hesitate to contact Tamás Kiss (kiss.t@wigner.hu).
+For more information please do not hesitate to contact Tamás Kiss (kiss.t (at) wigner.hu).
 
 Thank you!

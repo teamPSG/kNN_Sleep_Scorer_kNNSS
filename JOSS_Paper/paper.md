@@ -207,4 +207,10 @@ TK, DV, and DLB were full time employees and shareholders of Pfizer
 Inc. during development of this software package. This work was supported
 by Pfizer Inc. and SRI International.
 
+# Author contributions
+
+DV and TK developed the software, SM, MS, TSK, and DLB contributed data for
+development and testing, all authors took part in debugging and testing the
+software, and all authors wrote or contributed to writing the manuscript.
+
 # References
