@@ -177,6 +177,13 @@ fprintf('\n')
 clear filename tmp fn
 
 %% Preprocess features
+
+% This step is necessary to allow for the generation of a uniform set of
+% features across animals. It includes removal of bad epochs as well as
+% normalization to some standard signal section (like wake), and taking the
+% logarithm of the signal to generate a more normal distribution of feature
+% values. It will also merge states specified in p.Results.CombineStates.
+
 [T, rmidx, ~, normfact] = preprocess_features(T, 'IsTrainingSet', true, 'EpDur', epdur, ...
     'RemoveStates', p.Results.RemoveStates, 'CombineStates', p.Results.CombineStates, ...
     'PerLen', p.Results.PerLen, 'PerStart', p.Results.PerStart, ...
@@ -189,7 +196,12 @@ for expidx = 1:length(exps)
 end
 clear expidx rmidx
 
-%% Generate unified training set (in next version I could subset -- done in another function)
+%% Generate unified training set
+
+% The goal of this function is to use data from all possible source
+% (animals) by merging epochs into one unified training set. This way the
+% model can generalize better.
+
 fprintf('Generating training set...')
 tmpc = cellfun(@(fn) T.(fn), exps, 'UniformOutput', false);
 train_set = vertcat(tmpc{:});
@@ -197,6 +209,12 @@ fprintf(' done\n\n')
 clear tmpc
 
 %% Create cost matrix
+
+% This is a possible way to take care of imbalanced data. Or even in case
+% of balanced data, if accurate classification of one state is more
+% important than classification of other states, increasing penalty of
+% misclassification can be useful.
+
 fprintf('Cost matrix generation...')
 clear cost_m
 tmp.states = unique(train_set{:,'Scores'});
@@ -277,6 +295,13 @@ switch p.Results.DoPCA
             disp(coef)
         end
     case 'no'
+        
+        % If dimensionality of the feature space is not decreased by a PCA
+        % of some sort, features are selected by either comparing them to
+        % each other (estimate_feature_goodness) or by trying the model 
+        % performance on a subsample of epocs (select_features). The below
+        % combines these two in different ways.
+        
         fprintf('Starting feature selection...\n')
         clear seld_features
         if isempty(p.Results.FeatFile)
@@ -331,6 +356,10 @@ switch p.Results.DoPCA
 end
 
 %% Train model
+
+% In case of a kNN training is essentially labelling points in feature
+% space using the manual labels.
+
 fprintf('Starting model training...')
 if strcmp(p.Results.DoPCA, 'no')
     mdl.only = train_classifier(train_set(:, [true seld_features]), ...

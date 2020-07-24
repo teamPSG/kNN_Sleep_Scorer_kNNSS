@@ -1,0 +1,179 @@
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/A1_VEH_021815_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/A2_VEH_022415_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/A3_VEH_022715_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/A4_VEH_051915_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/A5_VEH_052615_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/A6_VEH_052915_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/A7_VEH_052615_test.mat.
+
+
+Flagging states: D SS U for removal... done.
+
+Flagging outliers... done.
+
+Flagging segments w/ missing signal... done.
+
+Normalizing using given time period... done.
+
+Performing log transformation... done.
+
+Removing bad signal... done.
+
+Replacing state labels:
+	WA -> W
+	NA -> NR
+	RA -> R
+... done.
+
+
+Flagging states: D SS U for removal... done.
+
+Flagging outliers... done.
+
+Flagging segments w/ missing signal... done.
+
+Skipping normalization.
+
+Performing log transformation... done.
+
+Removing bad signal... done.
+
+Replacing state labels:
+	WA -> W
+	NA -> NR
+	RA -> R
+... done.
+
+Loading model from /home/umat/bognor/kNNSS/Example_Data/IntermRes/ExampleRatSingleModel.mat... done.
+
+Predicting labels... done.
+
+True positive rates and false positive rates achieved using a single model for all animals:
+A1_VEH_021815:
+	W -- TPR: 0.69; FPR: 0.08
+	NR -- TPR: 0.92; FPR: 0.26
+	R -- TPR: 0.76; FPR: 0.01
+
+A2_VEH_022415:
+	W -- TPR: 0.94; FPR: 0.06
+	NR -- TPR: 0.94; FPR: 0.06
+	R -- TPR: 0.85; FPR: 0.01
+
+A3_VEH_022715:
+	W -- TPR: 0.97; FPR: 0.28
+	NR -- TPR: 0.68; FPR: 0.03
+	R -- TPR: 0.76; FPR: 0.01
+
+A4_VEH_051915:
+	W -- TPR: 0.94; FPR: 0.08
+	NR -- TPR: 0.90; FPR: 0.05
+	R -- TPR: 0.92; FPR: 0.01
+
+A5_VEH_052615:
+	W -- TPR: 0.97; FPR: 0.15
+	NR -- TPR: 0.83; FPR: 0.03
+	R -- TPR: 0.80; FPR: 0.01
+
+A6_VEH_052915:
+	W -- TPR: 0.89; FPR: 0.09
+	NR -- TPR: 0.91; FPR: 0.10
+	R -- TPR: 0.79; FPR: 0.01
+
+A7_VEH_052615:
+	W -- TPR: 0.93; FPR: 0.10
+	NR -- TPR: 0.89; FPR: 0.05
+	R -- TPR: 0.89; FPR: 0.01
+
+Average +- std of W [SEN, FPR] = [0.90, 0.12] +- [0.10, 0.08].
+Average +- std of NR [SEN, FPR] = [0.87, 0.08] +- [0.09, 0.08].
+Average +- std of R [SEN, FPR] = [0.83, 0.01] +- [0.06, 0.00].
+
+
+Loading model from /home/umat/bognor/kNNSS/Example_Data/IntermRes/ExampleRatSingleModel.mat... done.
+
+Predicting labels... done.
+
+True positive rates and false positive rates achieved using one model for each animal:
+A1_VEH_021815:
+	W -- TPR: 0.87; FPR: 0.06
+	NR -- TPR: 0.92; FPR: 0.09
+	R -- TPR: 0.86; FPR: 0.03
+
+A2_VEH_022415:
+	W -- TPR: 0.90; FPR: 0.03
+	NR -- TPR: 0.96; FPR: 0.09
+	R -- TPR: 0.89; FPR: 0.02
+
+A3_VEH_022715:
+	W -- TPR: 0.78; FPR: 0.05
+	NR -- TPR: 0.92; FPR: 0.16
+	R -- TPR: 0.88; FPR: 0.02
+
+A4_VEH_051915:
+	W -- TPR: 0.96; FPR: 0.04
+	NR -- TPR: 0.96; FPR: 0.03
+	R -- TPR: 0.94; FPR: 0.00
+
+A5_VEH_052615:
+	W -- TPR: 0.94; FPR: 0.03
+	NR -- TPR: 0.98; FPR: 0.06
+	R -- TPR: 0.87; FPR: 0.00
+
+A6_VEH_052915:
+	W -- TPR: 0.88; FPR: 0.04
+	NR -- TPR: 0.93; FPR: 0.10
+	R -- TPR: 0.92; FPR: 0.02
+
+A7_VEH_052615:
+	W -- TPR: 0.80; FPR: 0.04
+	NR -- TPR: 0.95; FPR: 0.15
+	R -- TPR: 0.92; FPR: 0.01
+
+Average +- std of W [SEN, FPR] = [0.88, 0.04] +- [0.07, 0.01].
+Average +- std of NR [SEN, FPR] = [0.94, 0.10] +- [0.02, 0.04].
+Average +- std of R [SEN, FPR] = [0.90, 0.01] +- [0.03, 0.01].
+
+
+1803 W and 3611 NR were deleted. Originally 6844 observations -> 1430 new observations.
+Retraining classifier... done.
+Predicting labels... done.
+
+True positive rates and false positive rates achieved using deflated single model:
+A1_VEH_021815:
+	W -- TPR: 0.81; FPR: 0.04
+	NR -- TPR: 0.92; FPR: 0.13
+	R -- TPR: 0.86; FPR: 0.05
+
+A2_VEH_022415:
+	W -- TPR: 0.94; FPR: 0.07
+	NR -- TPR: 0.89; FPR: 0.02
+	R -- TPR: 0.95; FPR: 0.03
+
+A3_VEH_022715:
+	W -- TPR: 0.98; FPR: 0.45
+	NR -- TPR: 0.38; FPR: 0.01
+	R -- TPR: 0.89; FPR: 0.07
+
+A4_VEH_051915:
+	W -- TPR: 0.90; FPR: 0.05
+	NR -- TPR: 0.85; FPR: 0.02
+	R -- TPR: 0.94; FPR: 0.08
+
+A5_VEH_052615:
+	W -- TPR: 0.96; FPR: 0.17
+	NR -- TPR: 0.74; FPR: 0.01
+	R -- TPR: 0.90; FPR: 0.06
+
+A6_VEH_052915:
+	W -- TPR: 0.87; FPR: 0.06
+	NR -- TPR: 0.89; FPR: 0.08
+	R -- TPR: 0.94; FPR: 0.04
+
+A7_VEH_052615:
+	W -- TPR: 0.95; FPR: 0.18
+	NR -- TPR: 0.71; FPR: 0.01
+	R -- TPR: 0.97; FPR: 0.07
+
+Average +- std of W [SEN, FPR] = [0.92, 0.15] +- [0.06, 0.15].
+Average +- std of NR [SEN, FPR] = [0.77, 0.04] +- [0.19, 0.05].
+Average +- std of R [SEN, FPR] = [0.92, 0.06] +- [0.04, 0.02].

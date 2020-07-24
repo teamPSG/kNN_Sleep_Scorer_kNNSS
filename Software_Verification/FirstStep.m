@@ -24,6 +24,7 @@
 %% Parameters                                                              \par\
 
 %IO
+par.DataFilt = 'A*'; % Filter to select which set of data to work on
 par.PostFn = '_trset.mat'; %This part will be appended to the name of the EDF file and features will be saved in this file for each experiment.
 par.DataExt = '.edf'; %File name extension for raw data
 par.TestPF = '_test.mat'; % This will be appended to the partition put aside for testing
@@ -39,7 +40,7 @@ par.CombineStates = {...
 par.TrainLabels = {'W', 'NR', 'R'}; %Manual labels to train
 
 %% Calculate features
-files = dir([par.DataDir filesep '*' par.DataExt]);
+files = dir([par.DataDir filesep par.DataFilt par.DataExt]);
 for file = files'
     filename = strrep(file.name, par.DataExt, '');
     fprintf('Processing %s.\n', filename);
@@ -51,7 +52,7 @@ clear file files filename ans
 
 %% Load pre-calculated features                                            \ED.(exp); T.(exp); exps{eidx}; fns{eidx}\
 clear T
-files = dir([par.IntDir filesep '*' par.PostFn]);
+files = dir([par.IntDir filesep par.DataFilt par.PostFn]);
 for expidx = 1:length(files)
     ifn = [par.IntDir filesep files(expidx).name];
     fprintf('Loading %s.\n', ifn)
@@ -66,6 +67,14 @@ fprintf('\n')
 clear expidx tmp expname ifn files 
 
 %% Combine score labels
+
+% Since the standard scoring time window is 10 or 30 seconds long, a number
+% of states might be present in a single window. Scoring experts often
+% times mark these by scoring an epoch as an artifactual one, like NA here
+% stands for a non-REM sleep epoch that is not really characteristic to the
+% non-REM state. These could be ignored altogether, however, to increase
+% sample size, in this example we merge marked epochs with clean ones.
+
 fprintf('Combining state labels...')
 for expidx = 1:length(exps)    
     [idx, loc] = ismember(T.(exps{expidx}){:, 'Scores'}, par.CombineStates(:,2));    

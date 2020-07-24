@@ -263,6 +263,12 @@ switch mst
 end
 
 %% Load data, get sampling rate
+
+%In this section data is loaded and using labels in the header we try to
+%guess which channel is the EEG and which is the EMG channel. If there are
+%multiple EEG channels either one of them can be used for further
+%calculations or a montage (one minus the other) can be used.
+
 if strcmp(p.Results.DataFileType, 'EDF')
     edfif = [top_folder filesep p.Results.EDFFolder filesep filename '.edf'];
     fprintf('Reading EDF file: %s...', edfif)
@@ -408,6 +414,12 @@ end
 
 %% Calculate spectrogram using Chronux's multitaper method and band metric
 %Note: half of Fs_X is used below because of dummy downsampling
+
+%Power in different frequency bands are calculated here. The bands defined
+%here are classical EEG frequency bands that have activity correlated with
+%specific behavioral or sleep stages. The frequency interval of a given
+%band is specified in the e*g_band.ranges fields in Hz, and their
+%corresponding names in the e*g_band.names.
 if p.Results.CalcFeatures
     %EEG spectrogram:
     [eeg_band.values, pspec, faxis] = metric_band_power(eeg_band, data(1, 1:2:end), Fs/2, [epdur p.Results.SlideTime], p.Results.MTFreq, p.Results.Tapers); 
@@ -419,7 +431,12 @@ if p.Results.CalcFeatures
     B.Properties.VariableNames = [eeg_band.names emg_band.names];
 end
 
-%% Calculate Hjorth parameters -- This should be put in a separate function
+%% Calculate Hjorth parameters
+
+% Hjorth parameters are indicators of statistical properties used in signal
+% processing. For details see:
+% https://en.wikipedia.org/wiki/Hjorth_parameters
+
 if p.Results.CalcFeatures
     %binno = floor(length(data)/dN);
     binno = floor((length(data)-dN)/dS)+1;
@@ -436,6 +453,11 @@ if p.Results.CalcFeatures
 end
 
 %% Calculate relative EEG band powers
+
+% Relative powers are also useful features: for example an overall increase
+% of EEG signal power when transitioning from wake to sleep can suppress
+% certain power peaks, like theta.
+
 if p.Results.CalcFeatures
     RB = array2table(bsxfun(@rdivide, B{:,1:length(eeg_band.names)-1}, B{:,'eeg_RMS'}));
     RB.Properties.VariableNames = relat_eeg_band.names;

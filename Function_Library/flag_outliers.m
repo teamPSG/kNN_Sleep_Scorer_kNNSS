@@ -50,8 +50,14 @@ ov = p.Results.OutlierVariables;
 ifarm = table2array(ift(:, ov));
 
 switch p.Results.Method
+    %This is the standard, classical way in which if the value of a
+    %variable is over the median by MADAlpha then the epoch with that value
+    %is treated as outlier
     case 1
         rmidx = sum(bsxfun(@gt, bsxfun(@rdivide, abs(bsxfun(@minus, ifarm, median(ifarm))), mad(ifarm,1)), p.Results.MADAlpha), 2) > 0;
+    %This is another take on the same topic: a histogram is calculated and
+    %values of the variable in histogram bins over HistThresh are taken as
+    %outliers. This does not have any assumption of normality or anything.
     case 2
         rmidx = false(size(ifarm,1),1);
         thr = NaN(length(ov), 1);

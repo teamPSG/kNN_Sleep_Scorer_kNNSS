@@ -49,10 +49,10 @@ params.Fs = Fs;
 %% Band power calculation
 [S, ~, F] = mtspecgramc(data, movingwin, params);
 value = zeros(size(S,1), length(band_descr.ranges)+1);
-for bandidx = 1:length(band_descr.ranges),
+for bandidx = 1:length(band_descr.ranges)
     inds= F>=band_descr.ranges(bandidx,1) & F<band_descr.ranges(bandidx,2);
     value(:, bandidx) = sum(S(:,inds),2);
-end;
+end
 value(:, end) = sum(S,2);
 
 FmaxI = find(F >= Fs/2, 1, 'first');

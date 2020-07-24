@@ -42,7 +42,7 @@ affiliations:
  - name: Center for Neuroscience, SRI International, Menlo Park, CA, USA
    index: 3
 
- - name: Takeda Pharmaceuticals, Inc., Cambridge, MA, USA
+ - name: Current affiliation -- Takeda Pharmaceuticals, Inc., Cambridge, MA, USA
    index: 4
 
 date: 1 May 2020
@@ -106,18 +106,28 @@ often becomes a bottleneck and a potential source of
 subjectivity affecting research outcomes.
 
 In this paper, we present an automated approach intended to eliminate
-these potential issues. Building on features classically extracted
-from EEG and EMG data and machine learning-based classification of
-PSG, this approach is capable of staging sleep in multiple species
-under control and drug-treated conditions, facilitating the detection
-of treatment-induced changes or other manipulations (e.g.,
-genetic). Using human interpretable features calculated from EEG and
-EMG will be important to understand drug mechanisms, for prediction of
-treatment outcomes, and as biomarkers or even translational
-biomarkers. However, the initial application of our approach is for
+these potential issues. The initial application of our approach is for
 basic and discovery research in which experiments are conducted in
 large cohorts of rodents, with the expectation that results can be
-translated to higher-order mammals or humans.
+translated to higher-order mammals or even humans. Building on
+features classically extracted from EEG and EMG data and machine
+learning-based classification of PSG, this approach is capable of
+staging sleep in multiple species under control and drug-treated
+conditions, facilitating the detection of treatment-induced changes or
+other manipulations (e.g., genetic). Using human interpretable
+features calculated from EEG and EMG will be important to understand
+drug mechanisms, for prediction of treatment outcomes, and as
+biomarkers or even translational biomarkers. For example, one of the
+features used by the algorithm is the power in the theta frequency
+band (called `eeg_theta` in the code), which is the 4 Hz to 12 Hz
+range and it is known that an increase of theta activity together with
+low EMG activity (our relevant features are called `emg_high` and
+`emg_RMS`) are the hallmark of REM sleep (see the
+[figure](https://en.wikipedia.org/wiki/Rapid_eye_movement_sleep#/media/File:Normal_EEG_of_mouse.png)
+in @wiki:REM). However, theta power is also associated with other
+phenomena, like anxiety [@John2014], thus our `eeg_theta` feature,
+besides being used for sleep scoring can also be used as a biomarker
+of drug effect.
 
 Multiple software applications have been developed to address the
 problem of automated sleep stage scoring. In their comparative review,
@@ -129,20 +139,20 @@ combining a convolutional neural network-based architecture to produce
 domain invariant predictions integrated with a hidden Markov model to
 constrain state dynamics based upon known sleep physiology. While our
 method also builds on machine learning techniques, it is based on
-interpretable features [@wiki:XAI] and uses a simpler algorithm for
-classification -- which should make it an ideal choice for the broader
-community as well as for sleep experts who might not be too familiar
-with complex machine learning approaches. Furthermore, we chose not to
-constrain the number of identifiable sleep/wake states or the
-probability of transition from one state to another, as we and others
-have found that drug interventions and disease processes tend to
-change not only the amount of different sleep stages but their
-transition probabilities as well. Finally, our method is a supervised
-method that requires a training set. While this might seem to be a
-disadvantage over non-supervised methods, we have found that drug
-treatment or pathological conditions can result in sleep stages not
-observed in healthy controls. Thus, the algorithm must be trained to
-these new stages.
+interpretable features and uses a simpler algorithm for classification
+-- which should make it an ideal choice for the broader community as
+well as for sleep experts who might not be too familiar with complex
+machine learning approaches. Furthermore, we chose not to constrain
+the number of identifiable sleep/wake states or the probability of
+transition from one state to another, as we and others have found that
+drug interventions [@Harvey2013] and disease processes [@Mooij2020]
+tend to change not only the amount of time spent in different sleep
+stages but their transition probabilities as well. Finally, our method
+is a supervised method that requires a training set. While this might
+seem to be a disadvantage over non-supervised methods, we have found
+that drug treatment or pathological conditions can result in sleep
+stages not observed in healthy controls. Thus, the algorithm must be
+trained to these new stages.
 
 # Brief Software Description
 
@@ -176,36 +186,54 @@ following the procedure described above.
 ![Summary of training and using the *k*-nearest neighbors algorithm
  for predicting sleep stage labels.\label{fig:method}](fig1.png)
 
-The algorithm was used to predict sleep stages in mice, rats and
-non-human primates. Prediction accuracy was found to depend on a
-number of parameters of the input data, including consistency of
+The algorithm was used to predict sleep stages in mice
+(\autoref{fig:efficM}), rats (\autoref{fig:efficR}) and non-human
+primates (data not shown). Prediction accuracy was found to depend on
+a number of parameters of the input data, including consistency of
 manual scores and physiological signals, as well as the amount of
 artifacts. Furthermore, relative frequency of predicted labels can
 influence efficacy, with rare labels being harder to predict. The code
 on GitHub [@kNNSS] accompanying this paper contains the abridged
-version of a dataset described in detail in @schwartz2018. Three
-labels were predicted: wake (W), non-REM sleep (NR), and REM sleep
-(R), and prediction efficacy was calculated (\autoref{fig:effic}). The
-model was first used to train a single classifier merging training
-data from all animals (\autoref{fig:effic}, A), then individual models
-were trained, one for each animal (\autoref{fig:effic}, B). The GitHub
-repository includes additional information on prediction accuracy,
-including detailed values of true and false positive rates, as well as
-a method to deal with imbalanced data.
+version of two datasets, one from male Trace Amine-Associated Receptor
+1 (TAAR1) knockout mice described in detail in @schwartz2018
+(\autoref{fig:efficM}) and the other from male Sprague-Dawley rats
+collected in the Sleep Neurobiology Laboratory at SRI International
+(\autoref{fig:efficR}). The rodents in both datasets received an oral
+dosing of a water-based vehicle solution.
 
-![Estimation of prediction accuracy. For each state (wake -- W,
- non-REM -- NR, REM -- R) and animal (labeled asterisks) true and
- false positive rates are calculated. Red crosses denote mean and SEM.
- In A, training data was merged and one single classifier was trained
- to predict sleep stages of all animals. In B, an individual
- classifier was trained for each animal
- separately.\label{fig:effic}](fig2.png)
+Three labels were predicted: wake (W), non-REM
+sleep (NR), and REM sleep (R), and prediction efficacy was
+calculated. (However, note that any number of stages can be trained
+depending on how elaborate the manual scoring is.) The model was first
+used to train a single classifier merging training data from all
+animals (\autoref{fig:efficM} A, \autoref{fig:efficR} A), then
+individual models were trained, one for each animal
+(\autoref{fig:efficM} B, \autoref{fig:efficR} B). The GitHub repository
+includes additional information on prediction accuracy, including
+detailed values of true and false positive rates, as well as a method
+to deal with imbalanced data.
+
+![Estimation of prediction accuracy for the transgenic mouse data. For
+ each state (wake -- W, non-REM -- NR, REM -- R) and animal (points on
+ plots) true and false positive rates are calculated. Red crosses
+ denote mean and SEM.  In A, training data was merged and one single
+ classifier was trained to predict sleep stages of all animals. In B,
+ an individual classifier was trained for each animal
+ separately.\label{fig:efficM}](fig2.png)
+
+State labels were predicted the same way for the rat data (the same
+set of GitHub scripts were run) and prediction accuracy represented on
+\autoref{fig:efficR} shows very similar results.
+
+![Estimation of prediction accuracy for the rat data. Prediction and
+ figure set up as in
+ \autoref{fig:efficM}.\label{fig:efficR}](fig3.png)
 
 # Acknowledgments
 
 TK, DV, and DLB were full time employees and shareholders of Pfizer
-Inc. during development of this software package. This work was supported
-by Pfizer Inc. and SRI International.
+Inc.\ during development of this software package. This work was supported
+by Pfizer Inc.\ and SRI International.
 
 # Author contributions
 

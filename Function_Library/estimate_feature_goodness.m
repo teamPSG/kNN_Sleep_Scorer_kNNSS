@@ -52,6 +52,12 @@ addParamValue(p, 'PlotRatio', [2 3], @isnumeric);
 parse(p, ift, varargin{:});
 
 %% Main
+
+% We want to see how much the distribution of any pair of features overlap.
+% If they overlap then they contain the same information about states so
+% their goodness value will be low. We'd like to use good features, ie.
+% those that do not overlap too much.
+
 exps = fieldnames(ift);
 for expidx = 1:length(exps)
     fnames = ift.(exps{expidx}).Properties.VariableNames(2:end); %Names of features, 1 being Scores

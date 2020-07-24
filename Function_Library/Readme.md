@@ -53,6 +53,9 @@ confusion2PerformanceMetrics.m
 estimate_feature_goodness.m
 : This function uses [filter methods](https://en.wikipedia.org/wiki/Feature_selection#Filter_method) to select features used for classifier training that are most dissimilar.
 
+hjorth.m
+: Calculates the [Hjorth parameters](https://en.wikipedia.org/wiki/Hjorth_parameters) activity, mobility, and complexity. This function is part of the [BIOSIG-toolbox](http://biosig.sf.net/) and was written by Alois Schloegl (a.schloegl@ieee.org).
+
 select_features.m
 : The pair of estimate_feature_goodness.m, this function uses the [wrapper method](https://en.wikipedia.org/wiki/Feature_selection#Wrapper_method) (sequential feature selection here) to find best features to be used for training the classifier.
 

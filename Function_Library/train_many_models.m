@@ -169,6 +169,14 @@ fprintf('\n')
 clear filename tmp fn
 
 %% Preprocess features
+
+%This step is similarly set up than in the train_one_model() function,
+%however, when train_many_models() is run normalization is not always
+%necessary. One need to experiment a little to see how much conditions
+%change from one recording session to the other. For example, if drug
+%treatment is applied control and treatment records migh be very different
+%and normalization could be needed.
+
 [T, rmidx, ~, normfact] = preprocess_features(T, 'IsTrainingSet', true, 'EpDur', epdur, ...
     'RemoveStates', p.Results.RemoveStates, 'CombineStates', p.Results.CombineStates, ...
     'PerLen', p.Results.PerLen, 'PerStart', p.Results.PerStart, 'DoNormalize', p.Results.DoNormalize, ...
@@ -181,6 +189,12 @@ end
 clear expidx rmidx
 
 %% Create cost matrices
+
+% This is a possible way to take care of imbalanced data. Or even in case
+% of balanced data, if accurate classification of one state is more
+% important than classification of other states, increasing penalty of
+% misclassification can be useful.
+
 fprintf('Starting cost matrix generation...')
 clear cost_m
 for expidx = 1:length(exps)
@@ -214,6 +228,12 @@ fprintf(' done\n\n')
 clear expidx tmp
 
 %% Select features based on training data for each animal
+
+% Features are selected by either comparing them to
+% each other (estimate_feature_goodness) or by trying the model 
+% performance on a subsample of epocs (select_features). The below
+% combines these two in different ways.
+
 fprintf('Starting feature selection...\n')
 clear seld_features
 if isempty(p.Results.FeatFile)
@@ -268,7 +288,11 @@ disp(seld_features)
 fprintf('done.\n\n')
 clear expidx best_features
 
-%% Train models
+%% Train many models
+
+% In case of a kNN training is essentially labelling points in feature
+% space using the manual labels.
+
 fprintf('Starting model training...')
 clear mdl_set
 for expidx = 1:length(exps)

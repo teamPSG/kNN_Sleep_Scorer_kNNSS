@@ -1,0 +1,163 @@
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/tko116_01292016_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/tko118_01182016_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/tko120_01112016_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/tko122_01072016_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/tko124_01052016_test.mat.
+Loading /home/umat/bognor/kNNSS/Example_Data/IntermRes/tko128_01182016_test.mat.
+
+
+Flagging states: D SS U for removal... done.
+
+Flagging outliers... done.
+
+Flagging segments w/ missing signal... done.
+
+Normalizing using given time period... done.
+
+Performing log transformation... done.
+
+Removing bad signal... done.
+
+Replacing state labels:
+	WA -> W
+	NA -> NR
+	RA -> R
+... done.
+
+
+Flagging states: D SS U for removal... done.
+
+Flagging outliers... done.
+
+Flagging segments w/ missing signal... done.
+
+Skipping normalization.
+
+Performing log transformation... done.
+
+Removing bad signal... done.
+
+Replacing state labels:
+	WA -> W
+	NA -> NR
+	RA -> R
+... done.
+
+Loading model from /home/umat/bognor/kNNSS/Example_Data/IntermRes/ExampleSingleModel.mat... done.
+
+Predicting labels... done.
+
+True positive rates and false positive rates achieved using a single model for all animals:
+tko116_01292016:
+	W -- TPR: 0.98; FPR: 0.15
+	NR -- TPR: 0.85; FPR: 0.03
+	R -- TPR: 0.65; FPR: 0.01
+
+tko118_01182016:
+	W -- TPR: 0.93; FPR: 0.08
+	NR -- TPR: 0.96; FPR: 0.08
+	R -- TPR: 0.48; FPR: 0.01
+
+tko120_01112016:
+	W -- TPR: 0.98; FPR: 0.21
+	NR -- TPR: 0.75; FPR: 0.01
+	R -- TPR: 0.89; FPR: 0.03
+
+tko122_01072016:
+	W -- TPR: 0.77; FPR: 0.01
+	NR -- TPR: 1.00; FPR: 0.24
+	R -- TPR: 0.58; FPR: 0.00
+
+tko124_01052016:
+	W -- TPR: 1.00; FPR: 0.21
+	NR -- TPR: 0.75; FPR: 0.01
+	R -- TPR: 0.89; FPR: 0.01
+
+tko128_01182016:
+	W -- TPR: 0.97; FPR: 0.19
+	NR -- TPR: 0.80; FPR: 0.04
+	R -- TPR: 0.72; FPR: 0.01
+
+Average +- std of W [SEN, FPR] = [0.94, 0.14] +- [0.08, 0.08].
+Average +- std of NR [SEN, FPR] = [0.85, 0.07] +- [0.11, 0.09].
+Average +- std of R [SEN, FPR] = [0.70, 0.01] +- [0.17, 0.01].
+
+
+Loading model from /home/umat/bognor/kNNSS/Example_Data/IntermRes/ExampleSingleModel.mat... done.
+
+Predicting labels... done.
+
+True positive rates and false positive rates achieved using one model for each animal:
+tko116_01292016:
+	W -- TPR: 0.95; FPR: 0.05
+	NR -- TPR: 0.93; FPR: 0.04
+	R -- TPR: 0.77; FPR: 0.02
+
+tko118_01182016:
+	W -- TPR: 0.93; FPR: 0.05
+	NR -- TPR: 0.95; FPR: 0.05
+	R -- TPR: 0.78; FPR: 0.02
+
+tko120_01112016:
+	W -- TPR: 0.92; FPR: 0.03
+	NR -- TPR: 0.96; FPR: 0.07
+	R -- TPR: 0.82; FPR: 0.02
+
+tko122_01072016:
+	W -- TPR: 0.96; FPR: 0.03
+	NR -- TPR: 0.96; FPR: 0.04
+	R -- TPR: 0.84; FPR: 0.01
+
+tko124_01052016:
+	W -- TPR: 0.92; FPR: 0.04
+	NR -- TPR: 0.97; FPR: 0.10
+	R -- TPR: 0.71; FPR: 0.00
+
+tko128_01182016:
+	W -- TPR: 0.93; FPR: 0.01
+	NR -- TPR: 0.98; FPR: 0.07
+	R -- TPR: 0.85; FPR: 0.01
+
+Average +- std of W [SEN, FPR] = [0.93, 0.04] +- [0.02, 0.02].
+Average +- std of NR [SEN, FPR] = [0.96, 0.06] +- [0.02, 0.02].
+Average +- std of R [SEN, FPR] = [0.80, 0.01] +- [0.05, 0.01].
+
+
+1550 W and 3232 NR were deleted. Originally 5755 observations -> 973 new observations.
+Retraining classifier... done.
+Predicting labels... done.
+
+True positive rates and false positive rates achieved using deflated single model:
+tko116_01292016:
+	W -- TPR: 0.62; FPR: 0.14
+	NR -- TPR: 0.80; FPR: 0.32
+	R -- TPR: 0.93; FPR: 0.03
+
+tko118_01182016:
+	W -- TPR: 0.90; FPR: 0.04
+	NR -- TPR: 0.95; FPR: 0.04
+	R -- TPR: 0.86; FPR: 0.04
+
+tko120_01112016:
+	W -- TPR: 0.97; FPR: 0.18
+	NR -- TPR: 0.70; FPR: 0.00
+	R -- TPR: 0.97; FPR: 0.08
+
+tko122_01072016:
+	W -- TPR: 0.65; FPR: 0.00
+	NR -- TPR: 0.98; FPR: 0.25
+	R -- TPR: 0.84; FPR: 0.04
+
+tko124_01052016:
+	W -- TPR: 0.96; FPR: 0.22
+	NR -- TPR: 0.65; FPR: 0.01
+	R -- TPR: 0.95; FPR: 0.08
+
+tko128_01182016:
+	W -- TPR: 0.96; FPR: 0.13
+	NR -- TPR: 0.78; FPR: 0.02
+	R -- TPR: 0.93; FPR: 0.05
+
+Average +- std of W [SEN, FPR] = [0.84, 0.12] +- [0.16, 0.08].
+Average +- std of NR [SEN, FPR] = [0.81, 0.11] +- [0.13, 0.14].
+Average +- std of R [SEN, FPR] = [0.91, 0.05] +- [0.05, 0.02].

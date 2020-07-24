@@ -147,6 +147,12 @@ end
 fprintf('\n')
 
 %% Flag designated states
+
+% There might be some state labels that we don't want to train, like
+% artifactual states, or states when animals were dosed or when the
+% experiment was disturbed in any ways. If corresponding epochs are marked
+% they can be easily removed here.
+
 if isempty(p.Results.ArtifMap) && ~strcmp(p.Results.AFMapUse, 'alone')
     if p.Results.IsTrainingSet
         if ~isempty(p.Results.RemoveStates)
@@ -178,6 +184,12 @@ if isempty(p.Results.ArtifMap) && ~strcmp(p.Results.AFMapUse, 'alone')
 end
 
 %% Flag outliers
+
+% This removes epochs where the signal went crazy. Features to watch are
+% set in the p.Results.OutlierVariables parameter, defaulting to eeg_RMS
+% and emg_RMS. Ie. if there is too much (measured by deviation from mean)
+% EEG or EMG power in a given epoch, it will be removed.
+
 if p.Results.DoOutlierDet && isempty(p.Results.ArtifMap) && ~strcmp(p.Results.AFMapUse, 'alone')
     fprintf('Flagging outliers...');
     for expidx = 1:length(exps)
@@ -223,6 +235,10 @@ if isempty(p.Results.ArtifMap) && ~strcmp(p.Results.AFMapUse, 'alone')
 end
 
 %% Mix manually calculated artifact map with rmidx
+
+% One has the option to manually mark certain epochs as bad by specifying
+% its index.
+
 if ~isempty(p.Results.ArtifMap)
     fprintf('Adding artifact masks using ''%s''...', p.Results.AFMapUse)
     switch p.Results.AFMapUse
@@ -247,6 +263,10 @@ if ~isempty(p.Results.ArtifMap)
 end
 
 %% Normalize to W & do log transformation
+
+% Normalization to the mean wake value of features and taking the logarithm
+% is called here. Their order could matter, hence the below decision.
+
 if p.Results.Norm1st
     norm2W
     logtrans
