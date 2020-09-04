@@ -2,7 +2,7 @@
 
 ## Welcome to *k*NNSS software
 
-*k*NNSS is a Matlab package for automated sleep stage scoring using the *k*-nearest neighbors algorithm. Compared to other automated sleep scoring packages its main advantage is simplicity and the use of physiologically relevant, human-interpretable features.
+*k*NNSS is a Matlab package for automated sleep stage scoring using the *k*-nearest neighbors algorithm. Compared to other automated sleep scoring packages its main advantage is simplicity and the use of physiologically relevant, human-interpretable features. The code is documented in the following JOSS publication: [![DOI](https://joss.theoj.org/papers/10.21105/joss.02377/status.svg)](https://doi.org/10.21105/joss.02377)
 
 ## LICENSE
 
